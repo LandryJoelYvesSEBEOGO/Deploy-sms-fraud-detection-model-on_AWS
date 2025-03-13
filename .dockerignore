@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.log
+venv/
+.qodo/
+interface-web/
+mlruns/
+model_training/
+Resume_AI_intern.pdf
+Structured_OCR.ipynb
+test.py

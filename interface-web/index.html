@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détection de Fraude SMS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="app-header">
+            <h1>Détection de Fraude SMS</h1>
+        </header>
+        
+        <main class="app-main">
+            <div class="container">
+                <div class="card">
+                    <h2>Analyser un SMS</h2>
+                    <div class="input-group">
+                        <textarea 
+                            id="smsInput"
+                            placeholder="Entrez le message SMS à analyser..."
+                            rows="4"
+                        ></textarea>
+                        <button class="primary-button" id="analyzeButton">
+                            Analyser
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card result-card">
+                    <h2>Résultat</h2>
+                    <div class="result-content">
+                        <p id="resultText">En attente d'analyse...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>&copy; 2024 Détection de Fraude SMS. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('analyzeButton').addEventListener('click', async () => {
+            const smsText = document.getElementById('smsInput').value;
+            const resultText = document.getElementById('resultText');
+            
+            if (!smsText) {
+                resultText.textContent = 'Veuillez entrer un message à analyser.';
+                return;
+            }
+
+            try {
+                resultText.textContent = 'Analyse en cours...';
+                const response = await fetch('http://localhost:8080/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({ message: smsText })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la communication avec l\'API');
+                }
+
+                const result = await response.text();
+                resultText.textContent = result;
+            } catch (error) {
+                resultText.textContent = 'Une erreur est survenue: ' + error.message;
+                console.error('Erreur détaillée:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

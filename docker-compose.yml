@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/docs || exit 1"]
+      interval: 10s
+      timeout: 30s
+      retries: 10
+      start_period: 60s
+    networks:
+      - sms-fraud-network
+
+  web:
+    build: ./interface-web
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./interface-web:/app:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      - PYTHONUNBUFFERED=1
+      - API_URL=http://localhost:8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000 || exit 1"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    networks:
+      - sms-fraud-network
+
+networks:
+  sms-fraud-network:
+    driver: bridge 

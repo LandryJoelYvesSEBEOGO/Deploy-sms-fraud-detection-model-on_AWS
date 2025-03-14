@@ -12,10 +12,10 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/docs || exit 1"]
-      interval: 10s
-      timeout: 30s
-      retries: 10
-      start_period: 60s
+      interval: 30s
+      timeout: 60s
+      retries: 15
+      start_period: 120s
     networks:
       - sms-fraud-network
 
@@ -30,7 +30,7 @@ services:
         condition: service_healthy
     environment:
       - PYTHONUNBUFFERED=1
-      - API_URL=http://localhost:8080
+      - API_URL=http://api:8080
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000 || exit 1"]

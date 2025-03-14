@@ -9,6 +9,7 @@ services:
       - .:/app
     environment:
       - PYTHONUNBUFFERED=1
+      - HOST=0.0.0.0
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/docs || exit 1"]
@@ -24,13 +25,14 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./interface-web:/app:ro
+      - ./interface-web:/app
     depends_on:
       api:
         condition: service_healthy
     environment:
       - PYTHONUNBUFFERED=1
       - API_URL=http://api:8080
+      - HOST=0.0.0.0
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000 || exit 1"]

@@ -7,13 +7,14 @@ import uvicorn
 
 app = FastAPI()
 
-# Configuration des CORS.
+# Configuration des CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Permettre toutes les origines
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")

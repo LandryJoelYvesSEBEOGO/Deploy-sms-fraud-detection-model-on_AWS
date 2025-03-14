@@ -54,8 +54,10 @@
 
             try {
                 resultText.textContent = 'Analyse en cours...';
-                console.log('Envoi de la requête à:', '${API_URL}/predict');
-                const response = await fetch('${API_URL}/predict', {
+                const apiUrl = '${API_URL}';
+                console.log('Envoi de la requête à:', `${apiUrl}/predict`);
+                
+                const response = await fetch(`${apiUrl}/predict`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -83,4 +85,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

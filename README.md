@@ -1,5 +1,7 @@
 # SMS Fraud Detection - Machine Learning Project
 
+<img src="sms_fraud_detection.png" alt="Texte alternatif" width="1000">
+
 This project implements an SMS fraud detection system using a Machine Learning model based on DistilBERT. The system is deployed via Docker and can be easily put into production on AWS.
  <img src="project_Pipepline.jpg" alt="Texte alternatif" width="1000">
  
